@@ -1,0 +1,41 @@
+
+
+dcdiag /test:replications (relatório sobre o estado das replicações entre DCs)
+
+dcdiag /test:dns /e /v (relatório sobre o estado do DNS)
+
+repadmin /showreps (Mostra uma visão macro das replicações entre DCs)
+
+repadmin /replsummary (mostra estatísticas das replicações)
+
+repadmin /showism (informações sobre replicações – entre sites)
+
+DCDIAG /S:NOMEDOSERVIDOR (Um controlador de domínio normal – Neste exemplo, você deseja examinar o controlador de domínio para que possa verificar se ele está saudável e funcionando corretamente. Digite o seguinte comando no prompt de comando elevado.)
+
+DCDIAG /DNSRECORDREGISTRATION (Executa os testes /DnsBasic e também verifica se o endereço (A), o nome canônico (CNAME) e registros de recurso de serviço conhecido (SRV) são registrados. Além disso, cria um relatório de inventário com base nos resultados do teste.)
+
+DCDIAG /DNSALL (Executa todos os testes, exceto para o teste de /DnsResolveExtName e gera um relatório.)
+
+REPADMIN /KCC
+AD recriasse os links automaticamente, que é o mais recomendável)
+
+REPADMIN /SYNCALL /EAPD (Forçar uma replicação imediata entre os Domain Controllers )
+
+Comando: NETDIAG (Ferramenta de diagnóstico de linha de comando Netdiag ajuda a isolar problemas de conectividade e rede, realizando uma série de testes para determinar o estado do seu cliente de rede. Esses testes e as informações de status de rede chave expõem oferecem aos administradores de rede e pessoal de suporte a um meio mais direto de identificar e isolar problemas de rede. Além disso, porque essa ferramenta não requer parâmetros ou opções sejam especificadas, administradores de rede e a equipe de suporte podem se concentrar em analisar a saída em vez de no treinamento de usuários como usar a ferramenta.)
+
+NETDIAG /FIX (Correções secundárias problemas. Use esse parâmetro para corrigir problemas no DNS (serviço de nomes de domínio), testes do controlador de domínio e outros problemas)
+
+NETDIAG /V (Use esse parâmetro para executar o Netdiag. No modo de detalhe a para exibir as informações sobre as ações realizadas.)
+
+
+NETDOM QUERY DC (Lista todos os DCs do domínio)
+
+NETDOM QUERY FSMO (Lista o DC que é o mestre de operações do domínio (roles))
+
+NETDOM QUERY /D:NORTHAMERICA SERVER (To list all the servers in Northamerica, type the following command at the command prompt)
+
+NETDOM QUERY /D:NORTHAMERICA DC
+To list all the domain controllers in the domain Northamerica, type the following command at the command prompt
+
+NETDOM RESETPWD /S:SRVCEAM05 /UD:CEAM\ADMINISTRATOR /PD:* (Identificamos que o security channel do DC SRVCEAM estava quebrado)
+
