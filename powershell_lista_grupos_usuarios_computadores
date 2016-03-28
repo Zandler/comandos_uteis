@@ -1,0 +1,43 @@
+$Domain = New-Object System.DirectoryServices.DirectoryEntry
+$Searcher = New-Object System.DirectoryServices.DirectorySearcher
+$Searcher.SearchRoot = $Domain
+$Searcher.PageSize = 200
+$Searcher.SearchScope = "subtree"
+
+$Searcher.PropertiesToLoad.Add("distinguishedName") > $Null
+$Searcher.PropertiesToLoad.Add("Name") > $Null
+
+$Searcher.Filter = "(objectCategory=organizationalUnit)"
+$OUs = $Searcher.FindAll()
+
+ForEach ($OU In $OUs)
+{
+    $OUDN = $OU.Properties.Item("distinguishedName")
+    $OUBase = New-Object System.DirectoryServices.DirectoryEntry "LDAP://$OUDN"
+
+    "OU: " + $OU.Properties.Item("Name")
+    $Searcher.SearchRoot = $OUBase
+    $Searcher.SearchScope = "OneLevel"
+
+    $Searcher.Filter = "(objectCategory=computer)"
+    $Computers = $Searcher.FindAll()
+    ForEach ($Computer In $Computers)
+    {
+        " Computer: " + $Computer.Properties.Item("Name")
+    }
+
+    $Searcher.Filter = "(&(objectCategory=person)(objectClass=user))"
+    $Users = $Searcher.FindAll()
+    ForEach ($User In $Users)
+    {
+        " User: " + $User.Properties.Item("Name")
+    }
+} export
+
+
+$Computers | ForEach-Object {$User = Get-CimInstance Win32_ComputerSystem -ComputerName $PSItem | Select-Object -ExpandProperty UserName
+
+foreach ($computer in $computers) {$User = Get-CimInstance Win32_ComputerSystem -ComputerName $PSItem | Select-Object -ExpandProperty UserName}
+
+
+$grupos = ForEach-Object { $GName = $_.Samaccountname $group = Get-ADGroup $GName $group.Name | Out-File $MemberList -Encoding Unicode -Append}
