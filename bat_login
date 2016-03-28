@@ -1,0 +1,36 @@
+echo Atualiza usuario logado e estacao de trabalho
+\\srv\NETLOGON\BGInfo\Bginfo.exe \\srv\NETLOGON\BGInfo\BGInfoHMDCC.bgi /timer:0 /accepteula
+ping 127.0.0.1 -n 3 > nul
+
+REM Verificar se está instalado o antivirus, caso positivo vai para verificar o ocs, do contrário segue para instala_trend
+:Verifica_trend
+echo Verificando status antivirus
+IF EXIST "%programfiles(x86)%\Trend Micro\OfficeScan Client\NTRtScan.exe" goto Verifica_OCS
+IF EXIST "%programfiles%\Trend Micro\OfficeScan Client\NTRtScan.exe" goto Verifica_OCS
+
+REM Realiza a instalação do Trendmicro em modo silencioso
+REM irá aparecer outro prompt pois e necessário chamar o parametros do proprio trend
+:Instala_trend
+echo Antivirus nao encontrado. Instalando... 
+\\srv\OFCSCAN\AUTOPCC.EXE /S goto Verifica_OCS
+ping 127.0.0.1 -n 3 > nul
+
+REM Verifica se está instalado OCS Invetory, caso contrário instala_OCS
+:Verifica_OCS
+echo Verificando inventario da estacao de trabalho
+IF EXIST "%ProgramFiles%\OCS Inventory agent\OCSInventory.exe" goto seguro
+IF EXIST "%ProgramFiles(x86)%\OCS Inventory agent\OCSInventory.exe" goto seguro
+
+REM realiza a instalação do OCS
+:instala_OCS 
+echo Instalando software de invetário
+ping 127.0.0.1 -n 3 > nul
+\\Srv\msgn_logon$\OCS-NG-Windows-Agent-Setup.exe /S /SERVER=http://ocsserver/ocsinventory /NOSPLASH /DEBUG /NOW goto :seguro
+
+REM Após validação e execução informa e sai do sistema
+:seguro
+ECHO . Requisitos minimos de segurança atendido.
+ECHO . Att, 
+echo . Central de T.I 
+ping 127.0.0.1 -n 6 > nul
+:EXITCHO OFF
